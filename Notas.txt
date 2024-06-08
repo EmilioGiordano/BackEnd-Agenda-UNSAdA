@@ -1,0 +1,16 @@
+ULTIMOS CAMBIOS
+
+Checking_accounts.index
+	
+	Boton Ver servicios, muestra servicios con id_cuenta = checking_account->id (checking_account.id seria en java)
+
+Services.index
+	
+	Muestra solo los Servicios con id_cuenta = checking_account-> id = client->id
+
+	o sea los servicios que pertenecen a los usuarios que pertenecen al user que este logueado
+
+
+FALTA 
+	Logica que los montos de los pagos sobre servicios modifiquen los saldos_pendientes de servicios, y la suma de estos saldos pendientes se sumen al saldo a pagar de la cuenta.
+

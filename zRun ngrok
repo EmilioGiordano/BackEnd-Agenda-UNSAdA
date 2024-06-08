@@ -1,0 +1,15 @@
+1
+
+./ngrok.exe config add-authtoken 2hCWi8yTRkEhP8gydfpbmNyPTCs_4vf6t2PSwqT2tgjJp3Mmd
+
+2
+
+.\ngrok http 8000
+
+TRAFIC INSPECTOR
+https://dashboard.ngrok.com/ac_2hCWi3jNF7NxGSG5cVAu0kbAyHm/observability/traffic-inspector
+
+REQUEST INSPECTO
+http://localhost:4040/inspect/http
+
+https://dashboard.ngrok.com/get-started/setup/windows
