@@ -39,7 +39,6 @@ Route::put('/carrerPlans/{id}', [CarrerPlanController::class, 'update']);
 Route::patch('/carrerPlans/{id}', [CarrerPlanController::class, 'updatePartial']);
 Route::delete('/carrerPlans/{id}', [CarrerPlanController::class, 'destroy']);
 
-
 // -------- PLAN COURSE RELATION APIs -------- //
 Route::get('/planCourses', [PlanCourseController::class, 'index']);
 Route::get('/planCourses/{id}', [PlanCourseController::class, 'show']);
@@ -49,9 +48,8 @@ Route::patch('/planCourses/{id}', [PlanCourseController::class, 'updatePartial']
 Route::delete('/planCourses/{id}', [PlanCourseController::class, 'destroy']);        
 // -------- Todas las asignaturas de un Plan -------- //
 Route::get('/carrerPlans/{id}/courses', [CarrerPlanController::class, 'getCourses']);
-        
-// -------- PLAN COURSE RELATION APIs -------- //
 
+// -------- PLAN COURSE RELATION APIs -------- //
 Route::get('/prerequisites', [PrerequisiteController::class, 'index']);
 Route::get('/prerequisites/{id}', [PrerequisiteController::class, 'show']);
 Route::post('/prerequisites', [PrerequisiteController::class, 'store']);

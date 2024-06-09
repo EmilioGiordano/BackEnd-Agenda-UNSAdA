@@ -17,9 +17,10 @@ class PlanCourseControllerView extends Controller
 {
     public function index()
     {
-        // Ordenar por 'id_plan' de menor a mayor
+        // Ordenar primero por 'id_plan' de menor a mayor y luego por 'id_asignatura' de menor a mayor
         $planCourses = PlanCourse::with('carrerPlan')
-            ->orderBy('id_plan', 'asc') // Agregamos el orderBy aquí
+            ->orderBy('id_plan', 'asc') // Ordenar por 'id_plan'
+            ->orderBy('id_asignatura', 'asc') // Ordenar por 'id_asignatura'
             ->paginate();
 
         return view('plan-course.index', compact('planCourses'))
