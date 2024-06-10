@@ -18,7 +18,7 @@ Route::post('/students', [StudentController::class, 'store']);
 Route::put('/students/{id}', [StudentController::class, 'update']);
 Route::patch('/students/{id}', [StudentController::class, 'updatePartial']);
 Route::delete('/students/{id}', [StudentController::class, 'destroy']);
-Route::get('/students/{id}/plan', [StudentController::class, 'showWithPlan']);
+// Route::get('/students/{id}/plan', [StudentController::class, 'showWithPlan']); NO SE USA MÁS
 Route::get('/students/{id}/courses', [StudentController::class, 'showCourses']);
 
 // -------- COURSES APIs -------- //

@@ -12,22 +12,35 @@ use App\Models\CarrerPlan;
 
 class StudentController extends Controller
 {
-    //GET ALL
-    public function index()
-    {
-        $students = Student::all();
-
-        if ($students->isEmpty()){
-            $data = [
-                'message' => 'No hay estudiantes registrados',
-                'status' => 200,
-
-        ];
-            return response()->json($data, 404);
-        }
-
-        return response()->json($students, 200);
-    }
+     // GET ALL
+     public function index()
+     {
+         $students = Student::with('carrerPlan')->get();
+ 
+         if ($students->isEmpty()) {
+             $data = [
+                 'message' => 'No hay estudiantes registrados',
+                 'status' => '404',
+             ];
+             return response()->json($data, 404);
+         }
+ 
+         $data = $students->map(function ($student) {
+             return [
+                 'id' => $student->id,
+                 'id_user' => $student->id_user,
+                 'name' => $student->name,
+                 'surname' => $student->surname,
+                 'dni' => $student->dni,
+                 'carrer_plan' => $student->carrerPlan->name ?? null, // Check if carrerPlan exists
+             ];
+         });
+ 
+         return response()->json([
+             'students' => $data,
+             'status' => '200',
+         ], 200);
+     }
         //GET by ID
         //GET ANTIGUO, devuelve todo el objeto studen(incluye datos que no nos interesan)
         // public function show($id)
@@ -49,69 +62,69 @@ class StudentController extends Controller
         // }
     
         //GET by ID 
-        public function show($id)
-        {
-            $student = Student::find($id);
-    
-            if (!$student){
-                $data = [
-                    'message' => 'Estudiante no encontrado',
-                    'status' => '404'
-                ];
-                return response()->json($data, 404);
-            }
+    public function show($id)
+    {
+        $student = Student::find($id);
+
+        if (!$student){
             $data = [
-                'id'=> $student->id,
-                'id_user'=>$student->id_user,
-                'name' => $student->name,
-                'surname' => $student->surname,
-                'dni' => $student->dni,
-                'carrer plan' => $student->carrerPlan->name,
-                'status' => '200'
+                'message' => 'Estudiante no encontrado',
+                'status' => '404'
             ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'id'=> $student->id,
+            'id_user'=>$student->id_user,
+            'name' => $student->name,
+            'surname' => $student->surname,
+            'dni' => $student->dni,
+            'carrer plan' => $student->carrerPlan->name,
+            'status' => '200'
+        ];
+
+    return response()->json($data, 200);
+    }
     
+    //GET by ID and PLAN->COURSE::LIST
+    public function showCourses($id)
+    {
+        $student = Student::find($id);
+        if (!$student) {
+            return response()->json(['message' => 'Estudiante no encontrado', 'status' => '404'], 404);
+        }
+        $carrerPlan = $student->carrerPlan;
+        if (!$carrerPlan) {
+            return response()->jason(['message'=> 'Plan de carrera no encontrado para el estudiante.']);
+        }
+
+        if (!$student){
+            $data = [
+                'message' => 'Estudiante no encontrado',
+                'status' => '404'
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'id'=> $student->id,
+            'name' => $student->name,
+            'surname' => $student->surname,
+            'dni' => $student->dni,
+            'carrer plan' => $student->carrerPlan->name,
+            'courses'=> $carrerPlan->planCourses->map(function($planCourse){
+                return [
+                    'id' => $planCourse->course->id,
+                    'name' => $planCourse->course->name,
+                    'course code' =>$planCourse->course->course_code,
+                    'year' => $planCourse->course->year,
+                    'semester' => $planCourse->course->semester,
+                    'departament' => $planCourse->course->departament
+                ];
+            })
+        ];
+
         return response()->json($data, 200);
-        }
-    
-        //GET by ID and PLAN->COURSE::LIST
-        public function showCourses($id)
-        {
-            $student = Student::find($id);
-            if (!$student) {
-                return response()->json(['message' => 'Estudiante no encontrado', 'status' => '404'], 404);
-            }
-            $carrerPlan = $student->carrerPlan;
-            if (!$carrerPlan) {
-                return response()->jason(['message'=> 'Plan de carrera no encontrado para el estudiante.']);
-            }
-    
-            if (!$student){
-                $data = [
-                    'message' => 'Estudiante no encontrado',
-                    'status' => '404'
-                ];
-                return response()->json($data, 404);
-            }
-            $data = [
-                'id'=> $student->id,
-                'name' => $student->name,
-                'surname' => $student->surname,
-                'dni' => $student->dni,
-                'carrer plan' => $student->carrerPlan->name,
-                'courses'=> $carrerPlan->planCourses->map(function($planCourse){
-                    return [
-                        'id' => $planCourse->course->id,
-                        'name' => $planCourse->course->name,
-                        'course code' =>$planCourse->course->course_code,
-                        'year' => $planCourse->course->year,
-                        'semester' => $planCourse->course->semester,
-                        'departament' => $planCourse->course->departament
-                    ];
-                })
-            ];
-    
-            return response()->json($data, 200);
-        }
+    }
     //POST
     public function store(Request $request)
     {
@@ -154,9 +167,6 @@ class StudentController extends Controller
         return response()->json($data, 201);
     }
 
-
-
-    
     //PUT
     public function update(Request $request, $id)
     {
