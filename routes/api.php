@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CarrerPlanController;
 use App\Http\Controllers\Api\PlanCourseController;
 use App\Http\Controllers\Api\PrerequisiteController;
-use App\Http\Controllers\Api\StudentCourseController;
-use App\Models\Student;
-use App\Models\StudentCourse;
+use App\Http\Controllers\Api\UserController;
+
+// -------- USER APIs -------- //
+Route::post('/users', [UserController::class, 'store']);
+
 
 // -------- STUDENTS APIs -------- //
 Route::get('/students', [StudentController::class, 'index']);
@@ -20,6 +22,8 @@ Route::patch('/students/{id}', [StudentController::class, 'updatePartial']);
 Route::delete('/students/{id}', [StudentController::class, 'destroy']);
 // Route::get('/students/{id}/plan', [StudentController::class, 'showWithPlan']); NO SE USA MÁS
 Route::get('/students/{id}/courses', [StudentController::class, 'showCourses']);
+
+
 
 // -------- COURSES APIs -------- //
 
