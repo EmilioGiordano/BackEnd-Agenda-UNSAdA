@@ -8,9 +8,11 @@ use App\Http\Controllers\Api\CarrerPlanController;
 use App\Http\Controllers\Api\PlanCourseController;
 use App\Http\Controllers\Api\PrerequisiteController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\AuthController;
 
 // -------- USER APIs -------- //
-Route::post('/users', [UserController::class, 'store']);
+Route::post('/register', [UserController::class, 'store']);
+Route::post('/login', [UserController::class, 'login']);
 
 
 // -------- STUDENTS APIs -------- //

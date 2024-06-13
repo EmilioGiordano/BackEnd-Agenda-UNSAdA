@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\MockObject\Builder\Stub;
 
@@ -49,7 +50,36 @@ class UserController extends Controller
         ];
         return response()->json($data, 201);
     }
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
+        if (Auth::attempt($credentials)) {
+            return response()->json(['status' => 'success']);
+        } else {
+            return response()->json(['status' => 'failure']);
+        }
+    }
+    
+
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (Auth::attempt($credentials)) {
+    //         $user = Auth::user();
+    //         $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+    //         return response()->json(['token' => $token], 200);
+    //     } else {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    // }
 
 
 }    

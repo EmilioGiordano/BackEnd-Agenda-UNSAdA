@@ -307,6 +307,7 @@ class StudentController extends Controller
                     'year' => $planCourse->course->year,
                     'semester' => $planCourse->course->semester,
                     'departament' => $planCourse->course->departament
+                    
                 ];
             })
         ];
