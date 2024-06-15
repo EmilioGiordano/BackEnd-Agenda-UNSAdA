@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StudentController;
@@ -11,11 +10,13 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 
 // -------- USER APIs -------- //
+
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 
 
 // -------- STUDENTS APIs -------- //
+
 Route::get('/students', [StudentController::class, 'index']);
 Route::get('/students/{id}', [StudentController::class, 'show']);
 Route::post('/students', [StudentController::class, 'store']);
@@ -24,7 +25,8 @@ Route::patch('/students/{id}', [StudentController::class, 'updatePartial']);
 Route::delete('/students/{id}', [StudentController::class, 'destroy']);
 // Route::get('/students/{id}/plan', [StudentController::class, 'showWithPlan']); NO SE USA MÁS
 Route::get('/students/{id}/courses', [StudentController::class, 'showCourses']);
-
+// Cargar ID_STATUS en student_courses 
+Route::patch('/students/{id}/courses/status', [StudentController::class, 'updateCoursesStatuses']);
 
 
 // -------- COURSES APIs -------- //
@@ -46,6 +48,7 @@ Route::patch('/carrerPlans/{id}', [CarrerPlanController::class, 'updatePartial']
 Route::delete('/carrerPlans/{id}', [CarrerPlanController::class, 'destroy']);
 
 // -------- PLAN COURSE RELATION APIs -------- //
+
 Route::get('/planCourses', [PlanCourseController::class, 'index']);
 Route::get('/planCourses/{id}', [PlanCourseController::class, 'show']);
 Route::post('/planCourses', [PlanCourseController::class, 'store']);
@@ -55,7 +58,9 @@ Route::delete('/planCourses/{id}', [PlanCourseController::class, 'destroy']);
 // -------- Todas las asignaturas de un Plan -------- //
 Route::get('/carrerPlans/{id}/courses', [CarrerPlanController::class, 'getCourses']);
 
+
 // -------- PLAN COURSE RELATION APIs -------- //
+
 Route::get('/prerequisites', [PrerequisiteController::class, 'index']);
 Route::get('/prerequisites/{id}', [PrerequisiteController::class, 'show']);
 Route::post('/prerequisites', [PrerequisiteController::class, 'store']);
@@ -63,8 +68,7 @@ Route::put('/prerequisites/{id}', [PrerequisiteController::class, 'update']);
 Route::patch('/prerequisites/{id}', [PrerequisiteController::class, 'updatePartial']);
 Route::delete('/prerequisites/{id}', [PrerequisiteController::class, 'destroy']);
 
-// // -------- STUDENT COURSE RELATION APIs -------- //
-// Route::get('/api/studentCourse/{id}', [StudentCourseController::class, 'show']);
+
 
 
 

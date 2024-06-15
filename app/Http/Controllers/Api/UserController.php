@@ -19,9 +19,7 @@ class UserController extends Controller
             'name' => 'required|max:191',
             'email' => 'required|max:191',
             'password'=>'required|min:8'
-       
         ]);
-
         if ($validator->fails()) {
             $data = [
                 'message' => 'Error en la validación de datos.',
@@ -43,13 +41,13 @@ class UserController extends Controller
             ];
             return response()->json($data, 500);
         }
-        
         $data = [
             'user' => $user,
             'status' => 201
         ];
         return response()->json($data, 201);
     }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -60,7 +58,7 @@ class UserController extends Controller
             return response()->json(['status' => 'failure']);
         }
     }
-    
+}    
 
     // public function login(Request $request)
     // {
@@ -82,4 +80,3 @@ class UserController extends Controller
     // }
 
 
-}    
