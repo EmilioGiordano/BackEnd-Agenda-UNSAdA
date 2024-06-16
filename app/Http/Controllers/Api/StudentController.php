@@ -157,6 +157,35 @@ class StudentController extends Controller
         return response()->json(['message' => 'Statuses updated successfully'], 200);
     }
 
+
+    public function getStudentCoursesStatuses($student_id)
+    {
+        // Validar la existencia del estudiante
+        $student = Student::find($student_id);
+
+        if (!$student) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Obtener los cursos del estudiante junto con sus estados
+        $studentCourses = StudentCourse::where('id_estudiante', $student_id)
+                                    ->with('course', 'statusname')
+                                    ->get();
+
+      
+        $data = $studentCourses->map(function($studentCourse) {
+            return [
+                'course_id' => $studentCourse->id_asignatura,
+                'status_id' => $studentCourse->id_status,
+                'course_name' => $studentCourse->course ? $studentCourse->course->name : null,
+                'status_name' => $studentCourse->statusname ? $studentCourse->statusname->name : null
+            ];
+        });
+
+        return response()->json($data, 200);
+    }
+
+
     //POST
     public function store(Request $request)
     {

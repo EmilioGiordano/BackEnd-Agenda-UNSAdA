@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CarrerPlanController;
 use App\Http\Controllers\Api\PlanCourseController;
 use App\Http\Controllers\Api\PrerequisiteController;
+use App\Http\Controllers\Api\StudentCourseController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 
@@ -27,6 +28,8 @@ Route::delete('/students/{id}', [StudentController::class, 'destroy']);
 Route::get('/students/{id}/courses', [StudentController::class, 'showCourses']);
 // Cargar ID_STATUS en student_courses 
 Route::patch('/students/{id}/courses/status', [StudentController::class, 'updateCoursesStatuses']);
+
+Route::get('/students/{id}/courses/status', [StudentController::class, 'getStudentCoursesStatuses']);
 
 
 // -------- COURSES APIs -------- //
@@ -70,5 +73,6 @@ Route::delete('/prerequisites/{id}', [PrerequisiteController::class, 'destroy'])
 
 
 
-
+// QUERY
+Route::get('/executequery', [StudentCourseController::class, 'executeQuery']);
 
