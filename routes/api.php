@@ -24,12 +24,10 @@ Route::post('/students', [StudentController::class, 'store']);
 Route::put('/students/{id}', [StudentController::class, 'update']);
 Route::patch('/students/{id}', [StudentController::class, 'updatePartial']);
 Route::delete('/students/{id}', [StudentController::class, 'destroy']);
-// Route::get('/students/{id}/plan', [StudentController::class, 'showWithPlan']); NO SE USA MÁS
 Route::get('/students/{id}/courses', [StudentController::class, 'showCourses']);
-// Cargar ID_STATUS en student_courses 
 Route::patch('/students/{id}/courses/status', [StudentController::class, 'updateCoursesStatuses']);
-
 Route::get('/students/{id}/courses/status', [StudentController::class, 'getStudentCoursesStatuses']);
+
 
 
 // -------- COURSES APIs -------- //
@@ -58,7 +56,6 @@ Route::post('/planCourses', [PlanCourseController::class, 'store']);
 Route::put('/planCourses/{id}', [PlanCourseController::class, 'update']);
 Route::patch('/planCourses/{id}', [PlanCourseController::class, 'updatePartial']);
 Route::delete('/planCourses/{id}', [PlanCourseController::class, 'destroy']);        
-// -------- Todas las asignaturas de un Plan -------- //
 Route::get('/carrerPlans/{id}/courses', [CarrerPlanController::class, 'getCourses']);
 
 
@@ -70,8 +67,6 @@ Route::post('/prerequisites', [PrerequisiteController::class, 'store']);
 Route::put('/prerequisites/{id}', [PrerequisiteController::class, 'update']);
 Route::patch('/prerequisites/{id}', [PrerequisiteController::class, 'updatePartial']);
 Route::delete('/prerequisites/{id}', [PrerequisiteController::class, 'destroy']);
-
-
 
 // QUERY
 Route::get('/executequery', [StudentCourseController::class, 'executeQuery']);

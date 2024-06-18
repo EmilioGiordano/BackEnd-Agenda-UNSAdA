@@ -13,59 +13,39 @@ use App\Models\CarrerPlan;
 
 class StudentController extends Controller
 {
-     // GET ALL
-     public function index()
-     {
-         $students = Student::with('carrerPlan')->get();
- 
-         if ($students->isEmpty()) {
-             $data = [
-                 'message' => 'No hay estudiantes registrados',
-                 'status' => '404',
-             ];
-             return response()->json($data, 404);
-         }
- 
-         $data = $students->map(function ($student) {
-             return [
-                 'id' => $student->id,
-                 'id_user' => $student->id_user,
-                 'name' => $student->name,
-                 'surname' => $student->surname,
-                 'dni' => $student->dni,
-                 'carrer_plan' => $student->carrerPlan->name ?? null, // Check if carrerPlan exists
-             ];
-         });
- 
-         return response()->json([
-             'students' => $data,
-             'status' => '200',
-         ], 200);
-     }
-        //GET by ID
-        //GET ANTIGUO, devuelve todo el objeto studen(incluye datos que no nos interesan)
-        // public function show($id)
-        // {
-        //     $student = Student::find($id);
-    
-        //     if (!$student){
-        //         $data = [
-        //             'message' => 'Estudiante no encontrado',
-        //             'status' => '404'
-        //         ];
-        //         return response()->json($data, 404);
-        //     }
-        //     $data = [
-        //         'student' => $student,
-        //         'status' => '200'
-        //     ];
-        //     return response()->json($data, 200);
-        // }
-    
-        //GET by ID 
+    // GET ALL
+    public function index()
+    {
+        $students = Student::with('carrerPlan')->get();
+
+        if ($students->isEmpty()) {
+            $data = [
+                'message' => 'No hay estudiantes registrados.',
+                'status' => '404',
+            ];
+            return response()->json($data, 404);
+        }
+
+        $data = $students->map(function ($student) {
+            return [
+                'id' => $student->id,
+                'id_user' => $student->id_user,
+                'name' => $student->name,
+                'surname' => $student->surname,
+                'dni' => $student->dni,
+                'carrer_plan' => $student->carrerPlan->name ?? null, // Check if carrerPlan exists
+            ];
+        });
+
+        return response()->json([
+            'students' => $data,
+            'status' => '200',
+        ], 200);
+    }
+
+    //GET by ID
     public function show($id)
     {
-
         $student = Student::find($id);
 
         if (!$student){
@@ -88,7 +68,7 @@ class StudentController extends Controller
         return response()->json($data, 200);
     }
     
-    //GET by ID and PLAN->COURSE::LIST
+    //GET by ID con listado de Courses.
     public function showCourses($id)
     {
         
@@ -129,7 +109,7 @@ class StudentController extends Controller
         return response()->json($data, 200);
     }
 
-    //PATCH student_courses->id_status
+    //PATCH student_courses->$id_status
     //Cargar ESTADO de ASIGNATURAS del ESTUDIANTE
     public function updateCoursesStatuses(Request $request, $student_id)
     {
@@ -157,7 +137,8 @@ class StudentController extends Controller
         return response()->json(['message' => 'Statuses updated successfully'], 200);
     }
 
-
+    //GET student_courses->$id_status
+    //Ver ESTADOS de todas las ASIGNATURAS del ESTUDIANTE
     public function getStudentCoursesStatuses($student_id)
     {
         // Validar la existencia del estudiante
@@ -184,7 +165,6 @@ class StudentController extends Controller
 
         return response()->json($data, 200);
     }
-
 
     //POST
     public function store(Request $request)
@@ -220,6 +200,7 @@ class StudentController extends Controller
             ];
             return response()->json($data, 500);
         }
+        
         
         $data = [
             'student' => $student,
@@ -276,7 +257,7 @@ class StudentController extends Controller
         
     }
 
-    //patch
+    //PATCH
     public function updatePartial(Request $request, $id)
     {
     
@@ -328,6 +309,7 @@ class StudentController extends Controller
         
     }
 
+    //DELETE
     public function destroy($id)
     {
         $student = Student::find($id);
@@ -380,6 +362,7 @@ class StudentController extends Controller
 
         return response()->json($data, 200);
     }
+        
 }
 
 

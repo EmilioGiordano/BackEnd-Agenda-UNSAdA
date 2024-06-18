@@ -42,8 +42,8 @@ class UserController extends Controller
             return response()->json($data, 500);
         }
         $data = [
-            'user' => $user,
-            'status' => 201
+            'id' => $user->id,
+        
         ];
         return response()->json($data, 201);
     }
@@ -59,6 +59,8 @@ class UserController extends Controller
         }
     }
 }    
+
+
 
     // public function login(Request $request)
     // {
