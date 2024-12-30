@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('carrer_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('carrer_name');
+            
+            $table->foreignId('id_carrer_name')->nullable();
+            $table->foreign('id_carrer_name')->references('id')->on('carrer_name')
+            ->onDelete('set null')->onUpdate('cascade');
+
             $table->string('proposal_code');
         });
     }
