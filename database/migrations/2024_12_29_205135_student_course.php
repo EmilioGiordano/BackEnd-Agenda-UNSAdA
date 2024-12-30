@@ -20,6 +20,12 @@ return new class extends Migration
             $table->foreign('id_course')->references('id')->on('courses')
             ->onDelete('set null')->onUpdate('cascade');
 
+            $table->foreignId('id_status')->nullable();
+            $table->foreign('id_status')->references('id')->on('status')
+            ->onDelete('set null')->onUpdate('cascade');
+
+
+
             $table->timestamps();
         });
     }
@@ -27,6 +33,6 @@ return new class extends Migration
     
     public function down(): void
     {
-       
+        Schema::dropIfExists('student_course');
     }
 };
