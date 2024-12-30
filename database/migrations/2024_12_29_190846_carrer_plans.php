@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             
             $table->foreignId('id_carrer_name')->nullable();
-            $table->foreign('id_carrer_name')->references('id')->on('carrer_name')
+            $table->foreign('id_carrer_name')->references('id')->on('carrer_names')
             ->onDelete('set null')->onUpdate('cascade');
 
             $table->string('proposal_code');
