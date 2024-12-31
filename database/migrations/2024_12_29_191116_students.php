@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->string('dni', 8);
             $table->string('full_name');
 
             // Foreign Key: id_user

@@ -2,53 +2,41 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-/**
- * Class Student
- *
- * @property $id
- * @property $id_user
- * @property $id_plan_carrera
- * @property $name
- * @property $surname
- * @property $dni
- * @property $created_at
- * @property $updated_at
- *
- * @property CarrerPlan $carrerPlan
- * @property StudentCourse[] $studentCourses
- * @property User $user
- */
+
 class Student extends Model
 { 
     static $rules = [
-		'name' => 'required',
-		'surname' => 'required',
-		'dni' => 'required',
-        'id_plan_carrera' => 'not required',
-        'id_plan' => 'not required'
+        'dni' => 'required|size:8',
+		'fullname' => 'required',
+        'id_user' => 'required',
+        'id_carrer_plan' => 'not required',   
     ];
 
     protected $perPage = 20;
+
+    // Se utiliza para definir los campos de un modelo que pueden ser asignados masivamente
     protected $fillable = [
-        'id_user',
-        'id_plan_carrera',
-        'name',
-        'surname',
+        'fullname',
         'dni'
     ];
 
+    // Propietario: carrer_plans
     public function carrerPlan()
     {
-        return $this->hasOne('App\Models\CarrerPlan', 'id', 'id_plan_carrera');
+        return $this->belongsTo('App\Models\CarrerPlan', 'id', 'id_carrer_plan');
     }
-    
-    public function studentCourses()
-    {
-        return $this->hasMany('App\Models\StudentCourse', 'id_estudiante', 'id');
-    }
+
  
+
+    // Propietario: user
+
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_user');
+        return $this->belongsTo('App\Models\User', 'id', 'id_user');
     }
+
+        // public function studentCourses()
+    // {
+    //     return $this->hasMany('App\Models\StudentCourse', 'id_student', 'id');
+    // }
 }
