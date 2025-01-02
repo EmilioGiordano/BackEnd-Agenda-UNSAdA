@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('semester');
 
             // Foreign Key: id_deparment
-            $table->foreignId('id_department')->nullable();
+            $table->foreignId('id_deparment')->nullable();
             $table->foreign('id_department')->references('id')->on('departments')
                 ->onDelete('set null')->onUpdate('cascade');  
 
