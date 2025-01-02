@@ -24,48 +24,40 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Course extends Model
 {
+    protected $perPage = 20;
+    protected $fillable = [
+        'course_code',
+        'name',
+        'year',
+        'semester',
+        'departament'
+    ];
     
     static $rules = [
 		'course_code' => 'required',
-		'name' => 'required',
-		'year' => 'required',
+		'name' => 'required|between: 1,5',
+		'year' => 'required|in: 1,2',
 		'semester' => 'required',
-		'departament' => 'required',
+		'id_department' => 'required',
     ];
 
-    protected $perPage = 20;
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'department', 'id');
+    }
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['course_code','name','year','semester','departament'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function planCourses()
     {
         return $this->hasMany('App\Models\PlanCourse', 'id_asignatura', 'id');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function prerequisites()
     {
         return $this->hasMany('App\Models\Prerequisite', 'id_asigCorrelativa', 'id');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function studentCourses()
     {
         return $this->hasMany('App\Models\StudentCourse', 'id_asignatura', 'id');
     }
-    
-
 }

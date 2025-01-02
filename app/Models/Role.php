@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     protected $fillable = ['name'];
+    
     static $rules = [
         'name' => 'required|max:30',
     ];
-    protected $perPage = 20;
 
     
     public function users()
